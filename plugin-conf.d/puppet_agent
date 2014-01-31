@@ -1,3 +1,5 @@
+# This assumes that the log is readable by group "adm"
+
 [puppet_agent]
 group adm
 env.PATH /usr/bin
