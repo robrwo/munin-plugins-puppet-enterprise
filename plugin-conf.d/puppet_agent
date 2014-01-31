@@ -1,0 +1,7 @@
+[puppet_agent]
+group adm
+env.PATH /usr/bin
+
+[puppet_agent_count]
+group adm
+env.PATH /usr/bin

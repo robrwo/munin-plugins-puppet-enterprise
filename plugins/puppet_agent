@@ -1,0 +1,93 @@
+#!/usr/bin/perl
+
+# This munin plugin monitors the average time it takes for the
+# puppet agent to run in the past hour.
+
+use v5.14.2;
+
+use strict;
+use warnings;
+
+use POSIX qw/ mktime /;
+use POSIX::strptime qw/ strptime /;
+
+for ( $ARGV[0] ) {
+
+    when ('config') {
+
+        if ( $0 =~ m/count/ ) {
+
+            say "graph_title Puppet Agent Runs Per Hour";
+            say "graph_vlabel Num Runs";
+            say "run_count.label Num Runs";
+
+        } else {
+
+            say "graph_title Puppet Agent Average Run Time (Past Hour)";
+            say "graph_vlabel Run Time";
+            say "avg_run.label Ave Run Time";
+
+        }
+
+        say "graph_category puppet";
+
+    }
+
+    default {
+
+        my ( $total, $count ) = process_log();
+
+        if ( $0 =~ m/count/ ) {
+
+            say sprintf( "run_count.value %d", $count );
+
+        } else {
+
+            say sprintf( "avg_run.value %1.3f", $total / $count ) if $count;
+
+        }
+
+    }
+
+}
+
+sub process_log {
+    my $log_file    = $ENV{puppet_logfile}    || '/var/log/syslog';
+    my $time_format = $ENV{puppet_timeformat} || '%b %d %H:%M:%S';
+
+    my $total = 0;
+    my $count = 0;
+
+    open my $fh, '<', $log_file
+        or die "Unable to open ${log_file}";
+
+    my $hour = time() - 3600;
+
+    while ( my $line = <$fh> ) {
+        next unless $line =~ m{\bpuppet-agent\b};
+
+        if ( $line =~ m{Finished catalog run in (\d+(?:\.\d+)) seconds} ) {
+
+            my $run_time = $1 + 0;
+
+            my @time = strptime( $line, $time_format );
+            $time[5] //= (localtime)[5];
+
+            my $epoch = mktime(@time);
+            if ( $epoch > $hour ) {
+
+                # print "# ${line}";
+
+                $total += $run_time;
+                $count++;
+
+            }
+
+        }
+    }
+
+    close $fh;
+
+    return ( $total, $count );
+}
+
