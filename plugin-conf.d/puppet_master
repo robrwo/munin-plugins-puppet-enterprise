@@ -1,0 +1,7 @@
+[puppet_master]
+group adm
+env.PATH /usr/bin
+
+[puppet_master_count]
+group adm
+env.PATH /usr/bin
