@@ -38,7 +38,7 @@ for ( $ARGV[0] ) {
 
         if ( $0 =~ m/count/ ) {
 
-            say sprintf( "global_compile_count.value %d", $count );
+            say sprintf( "global_compile_count.value %d", $count ) if $count;
 
         } else {
 

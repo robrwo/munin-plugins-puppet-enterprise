@@ -39,7 +39,7 @@ for ( $ARGV[0] ) {
 
         if ( $0 =~ m/count/ ) {
 
-            say sprintf( "run_count.value %d", $count );
+            say sprintf( "run_count.value %d", $count ) if $count;
 
         } else {
 
