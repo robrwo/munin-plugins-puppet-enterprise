@@ -3,6 +3,12 @@
 This repository contains Munin Plugins that work with Puppet
 Enterprise 3.
 
+## Requirements
+
+The [POSIX::strptime](https://metacpan.org/pod/POSIX::strptime)
+module, which on Debian Wheezy is the package
+`libposix-strptime-perl`.
+
 ## Installation Instructions
 
 ```sh
