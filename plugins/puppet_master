@@ -52,8 +52,8 @@ for ( $ARGV[0] ) {
 }
 
 sub process_log {
-    my $log_file    = $ENV{puppet_logfile}    || '/var/log/syslog';
-    my $time_format = $ENV{puppet_timeformat} || '%b %d %H:%M:%S';
+    my $log_file    = $ENV{log_file}    || '/var/log/syslog';
+    my $time_format = $ENV{time_format} || '%b %d %H:%M:%S';
 
     my $total = 0;
     my $count = 0;
