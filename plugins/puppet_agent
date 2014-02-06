@@ -21,11 +21,29 @@ for ( $ARGV[0] ) {
             say "graph_vlabel Num Runs";
             say "run_count.label Num Runs";
 
+            my $min_warn = $ENV{min_count_warning} || '2';
+            my $max_warn = $ENV{max_count_warning} || '20';
+
+            my $min_crit = $ENV{min_count_critical} || '1';
+            my $max_crit = $ENV{max_count_critical} || '30';
+
+            say "run_count.warning ${min_warn}:${max_warn}";
+            say "run_count.critical ${min_crit}:${max_crit}";
+
         } else {
 
             say "graph_title Puppet Agent Average Run Time (Past Hour)";
             say "graph_vlabel Run Time";
             say "avg_run.label Ave Run Time";
+
+            my $min_warn = $ENV{min_run_warning} || '0';
+            my $max_warn = $ENV{max_run_warning} || '45';
+
+            my $min_crit = $ENV{min_run_critical} || '0';
+            my $max_crit = $ENV{max_run_critical} || '60';
+
+            say "avg_run.warning ${min_warn}:${max_warn}";
+            say "avg_run.critical ${min_crit}:${max_crit}";
 
         }
 

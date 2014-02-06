@@ -3,7 +3,11 @@
 [puppet_agent]
 group adm
 env.PATH /usr/bin
+env.max_run_warning 30
+env.max_run_critical 45
 
 [puppet_agent_count]
 group adm
 env.PATH /usr/bin
+env.min_count_warning 2
+env.min_count_critical 1
