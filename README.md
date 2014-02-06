@@ -11,6 +11,8 @@ module, which on Debian Wheezy is the package
 
 ## Installation Instructions
 
+To install the `puppet_agent` plugin:
+
 ```sh
 git clone https://github.com/robrwo/munin-plugins-puppet-enterprise.git
 cd munin-plugins-puppet-enterprise
@@ -29,6 +31,8 @@ sudo cp plugin-conf.d/puppet_agent /etc/munin/plugin-conf.d/puppet_agent
 
 sudo service munin-node restart
 ```
+
+Instructions are similar for the `puppet_master` plugin.
 
 ## Acknowledgements
 
