@@ -27,8 +27,8 @@ for ( $ARGV[0] ) {
             my $min_crit = $ENV{min_count_critical} || '1';
             my $max_crit = $ENV{max_count_critical} || '30';
 
-            say "run_count.warning ${min_warn}:${max_warn}";
-            say "run_count.critical ${min_crit}:${max_crit}";
+            say "run_count.warning ${min_warn}:${max_warn}"  if ($max_warn);
+            say "run_count.critical ${min_crit}:${max_crit}" if ($max_crit);
 
         } else {
 
@@ -42,8 +42,8 @@ for ( $ARGV[0] ) {
             my $min_crit = $ENV{min_run_critical} || '0';
             my $max_crit = $ENV{max_run_critical} || '60';
 
-            say "avg_run.warning ${min_warn}:${max_warn}";
-            say "avg_run.critical ${min_crit}:${max_crit}";
+            say "avg_run.warning ${min_warn}:${max_warn}"  if ($max_warn);
+            say "avg_run.critical ${min_crit}:${max_crit}" if ($max_crit);
 
         }
 
