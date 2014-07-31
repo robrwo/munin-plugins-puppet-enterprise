@@ -1,0 +1,64 @@
+#!/usr/bin/perl
+
+use v5.14.2;
+
+use strict;
+use warnings;
+
+use JSON::XS qw/ decode_json /;
+use LWP::UserAgent;
+
+my $host = 'localhost';
+
+if ( my $json = get_radiator_status() ) {
+
+    my $data = decode_json($json);
+
+    my $cmd = $ARGV[0] // 'fetch';
+
+    if ( $cmd eq 'config' ) {
+
+        say "graph_title Puppet Radiator";
+        say "graph_category puppet";
+
+        foreach my $field ( @{ $data->{display} } ) {
+
+            my $key = $field->{key};
+
+            next if $key eq 'all';
+
+            say "${key}.label " . $field->{name};
+            say "${key}.draw STACK";
+
+        }
+
+    } else {
+
+        foreach my $field ( @{ $data->{display} } ) {
+
+            my $key = $field->{key};
+
+            next if $key eq 'all';
+
+            say "${key}.value " . $data->{$key};
+
+        }
+
+    }
+
+}
+
+sub get_radiator_status {
+
+    my $ua = LWP::UserAgent->new;
+    $ua->ssl_opts( verify_hostname => 0 );
+
+    my $res = $ua->get("https://${host}/radiator.json");
+
+    if ( $res->is_success ) {
+        return $res->content;
+    } else {
+        return;
+    }
+}
+

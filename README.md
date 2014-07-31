@@ -9,6 +9,11 @@ The [POSIX::strptime](https://metacpan.org/pod/POSIX::strptime)
 module, which on Debian Wheezy is the package
 `libposix-strptime-perl`.
 
+This also needs the
+[LWP::UserAgent](https://metacpan.org/pod/LWP::UserAgent) and
+[JSON::XS](https://metacpan.org/pod/JSON::XS) modules, which on Debian
+Wheezy are the packages `libwww-perl` and `libjson-xs-perl`.
+
 ## Installation Instructions
 
 To install the `puppet_agent` plugin:
@@ -28,6 +33,9 @@ sudo ln -s /usr/local/share/munin/plugins/puppet_agent \
   /etc/munin/plugins/puppet_agent_count
 
 sudo cp plugin-conf.d/puppet_agent /etc/munin/plugin-conf.d/puppet_agent
+
+sudo ln -s /usr/local/share/munin/plugins/puppet_radiator \
+  /etc/munin/plugins/puppet_radiator
 
 sudo service munin-node restart
 ```
